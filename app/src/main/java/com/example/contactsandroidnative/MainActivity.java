@@ -24,6 +24,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ListView listViewContato;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ListView listViewContato = findViewById(R.id.list_view_contato);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         listViewContato.setAdapter(new ListaContatoAdapter(this, getContatoList()));
     }
 
