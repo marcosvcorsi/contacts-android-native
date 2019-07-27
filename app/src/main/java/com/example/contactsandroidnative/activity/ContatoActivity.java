@@ -1,5 +1,6 @@
 package com.example.contactsandroidnative.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -62,17 +63,31 @@ public class ContatoActivity extends AppCompatActivity {
     }
 
     private void salvarContato(){
-        contato.setNome(txtNome.getText().toString());
-        contato.setEmail(txtEmail.getText().toString());
-        contato.setCel(txtCel.getText().toString());
 
-        ContatoDAO dao = new ContatoDAO(this);
+        try {
+            contato.setNome(txtNome.getText().toString());
+            contato.setEmail(txtEmail.getText().toString());
+            contato.setCel(txtCel.getText().toString());
 
-        if(contato.getId() != null){
-            dao.atualizar(contato);
-        } else {
-            dao.salvar(contato);
+            ContatoDAO dao = new ContatoDAO(this);
+
+            if(contato.getId() != null){
+                dao.atualizar(contato);
+            } else {
+                dao.salvar(contato);
+            }
+
+            setResult(Activity.RESULT_OK);
+        } catch (Exception e){
+            e.printStackTrace();
+
+            setResult(Activity.RESULT_CANCELED);
+        } finally {
+            finish();
         }
+
+
+
     }
 
 }

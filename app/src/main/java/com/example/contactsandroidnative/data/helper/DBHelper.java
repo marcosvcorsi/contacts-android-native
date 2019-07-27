@@ -27,8 +27,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private void createTableContato(SQLiteDatabase sqLiteDatabase){
         StringBuffer createTableContato = new StringBuffer();
 
-        createTableContato.append("CREATE TABLE contato (");
-        createTableContato.append("id INTEGER PRIMARY KEY AUTO INCREMENT, ");
+        createTableContato.append("CREATE TABLE contato(");
+        createTableContato.append("id INTEGER PRIMARY KEY, ");
         createTableContato.append("nome TEXT, ");
         createTableContato.append("email TEXT, ");
         createTableContato.append("cel TEXT, ");

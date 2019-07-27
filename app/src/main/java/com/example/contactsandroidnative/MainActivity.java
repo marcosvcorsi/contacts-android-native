@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
        this.dao = new ContatoDAO(this);
-       this.contatoList = dao.listContatos();
 
        this.listViewContato = findViewById(R.id.list_view_contato);
        this.listViewContato.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -81,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateListView(){
+        this.contatoList = dao.listContatos();
+
         this.listViewContato.setAdapter(new ListaContatoAdapter(this, this.contatoList));
     }
 

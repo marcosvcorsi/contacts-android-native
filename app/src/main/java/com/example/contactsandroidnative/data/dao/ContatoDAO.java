@@ -30,7 +30,7 @@ public class ContatoDAO extends AbstractDAO{
         cv.put("email", contato.getEmail());
         cv.put("cel", contato.getCel());
         cv.put("imagem", contato.getImagem());
-        cv.put("situacao", contato.getExcluido());
+        cv.put("situacao", contato.getExcluido() != null ? contato.getExcluido() : 1);
 
         return cv;
     }
