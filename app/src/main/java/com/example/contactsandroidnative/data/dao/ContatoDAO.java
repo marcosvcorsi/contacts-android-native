@@ -1,9 +1,9 @@
 package com.example.contactsandroidnative.data.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.contactsandroidnative.data.model.Contato;
 
@@ -14,6 +14,17 @@ public class ContatoDAO extends AbstractDAO{
 
     public ContatoDAO(Context context) {
         super(context);
+    }
+
+    public Long salvar(Contato contato){
+        ContentValues cv = new ContentValues();
+        cv.put("nome", contato.getNome());
+        cv.put("email", contato.getEmail());
+        cv.put("cel", contato.getCel());
+        cv.put("imagem", contato.getImagem());
+        cv.put("situacao", contato.getExcluido());
+
+        return insert("contato", cv);
     }
 
     public List<Contato> listContatos(){

@@ -1,7 +1,10 @@
 package com.example.contactsandroidnative;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.contactsandroidnative.activity.ContatoActivity;
+import com.example.contactsandroidnative.data.dao.ContatoDAO;
 import com.example.contactsandroidnative.data.model.Contato;
 import com.example.contactsandroidnative.ui.adapter.ListaContatoAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Teste", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, ContatoActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -39,12 +43,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private List<Contato> getContatoList(){
-        List<Contato> contatoList = new ArrayList<>();
-
-        for(int i = 1; i <= 10; i++){
-            contatoList.add(new Contato("Teste" + i,
-                    "teste" + i + "@contato.com.br"));
-        }
+        ContatoDAO dao = new ContatoDAO(this);
+        List<Contato> contatoList = dao.listContatos();
 
         return contatoList;
     }

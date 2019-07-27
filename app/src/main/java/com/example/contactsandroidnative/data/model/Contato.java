@@ -5,13 +5,6 @@ import java.io.Serializable;
 
 public class Contato implements Serializable {
 
-    public Contato(){}
-
-    public Contato(String nome, String email){
-        this.nome = nome;
-        this.email = email;
-    }
-
     private Integer id;
 
     private String nome;
@@ -23,6 +16,13 @@ public class Contato implements Serializable {
     private String imagem;
 
     private Integer excluido;
+
+    public Contato(){}
+
+    public Contato(String nome, String email){
+        this.nome = nome;
+        this.email = email;
+    }
 
     public Integer getId() {
         return id;
