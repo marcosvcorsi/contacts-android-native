@@ -17,6 +17,14 @@ public class ContatoDAO extends AbstractDAO{
     }
 
     public Long salvar(Contato contato){
+        return insert("contato", getContentValues(contato));
+    }
+
+    public void atualizar(Contato contato){
+        update("contato", getContentValues(contato), contato.getId());
+    }
+
+    private ContentValues getContentValues(Contato contato){
         ContentValues cv = new ContentValues();
         cv.put("nome", contato.getNome());
         cv.put("email", contato.getEmail());
@@ -24,7 +32,7 @@ public class ContatoDAO extends AbstractDAO{
         cv.put("imagem", contato.getImagem());
         cv.put("situacao", contato.getExcluido());
 
-        return insert("contato", cv);
+        return cv;
     }
 
     public List<Contato> listContatos(){
@@ -55,4 +63,9 @@ public class ContatoDAO extends AbstractDAO{
         return contatoList;
     }
 
+    public void deletar(Contato contato) {
+        contato.setExcluido(0);
+
+        this.atualizar(contato);
+    }
 }

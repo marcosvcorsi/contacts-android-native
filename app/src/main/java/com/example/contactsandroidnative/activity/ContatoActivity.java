@@ -1,19 +1,22 @@
 package com.example.contactsandroidnative.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.contactsandroidnative.R;
 import com.example.contactsandroidnative.data.dao.ContatoDAO;
 import com.example.contactsandroidnative.data.model.Contato;
 
 public class ContatoActivity extends AppCompatActivity {
+
+    public static final String PARAM = "contato";
 
     private Contato contato;
 
@@ -32,7 +35,13 @@ public class ContatoActivity extends AppCompatActivity {
         txtCel = findViewById(R.id.txt_cel);
         imgContato = findViewById(R.id.img_contato);
 
-        contato = new Contato();
+        Intent intent = getIntent();
+
+        if(intent.hasExtra(PARAM)){
+            contato = (Contato) intent.getSerializableExtra(PARAM);
+        } else {
+            contato = new Contato();
+        }
     }
 
     @Override
@@ -48,6 +57,7 @@ public class ContatoActivity extends AppCompatActivity {
             salvarContato();
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -57,7 +67,12 @@ public class ContatoActivity extends AppCompatActivity {
         contato.setCel(txtCel.getText().toString());
 
         ContatoDAO dao = new ContatoDAO(this);
-        dao.salvar(contato);
+
+        if(contato.getId() != null){
+            dao.atualizar(contato);
+        } else {
+            dao.salvar(contato);
+        }
     }
 
 }

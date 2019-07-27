@@ -21,10 +21,20 @@ public class AbstractDAO {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         Long id = db.insert(table, null, cv);
-
         db.close();
 
         return id;
     }
+
+    protected void update(String table, ContentValues cv, Integer id){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        db.update(table, cv, "id = ?", new String[]{id.toString()});
+        db.close();
+    }
+
+
+
+
 
 }
