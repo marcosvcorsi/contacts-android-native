@@ -1,6 +1,10 @@
 package com.example.contactsandroidnative;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.example.contactsandroidnative.activity.ContatoActivity;
@@ -10,8 +14,13 @@ import com.example.contactsandroidnative.ui.adapter.ListaContatoAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.view.ContextMenu;
 import android.view.View;
@@ -26,9 +35,15 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE_PERMISSION = 540;
+
     private ListView listViewContato;
     private List<Contato> contatoList;
     private ContatoDAO dao;
+
+    private String[] permissions = new String[]{
+            Manifest.permission.SEND_SMS
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
        });
 
        registerForContextMenu(listViewContato);
+       checkPermissions(permissions);
     }
 
     private void openContato(Contato contato){
@@ -106,4 +122,57 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        for(int result: grantResults){
+            if(result == PackageManager.PERMISSION_DENIED){
+                alertPermission();
+            }
+        }
+    }
+
+    private void alertPermission() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Permissões negadas");
+        builder.setMessage("Para utilizar este aplicativo, é necessário aceitar as permissões");
+        builder.setPositiveButton("Tentar novamente", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                checkPermissions(permissions);
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void checkPermissions(String[] permissions){
+        if(Build.VERSION.SDK_INT >= 23){
+            List<String> permissionList = new ArrayList<>();
+
+            for(String permission : permissions){
+                if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
+                    permissionList.add(permission);
+                }
+            }
+
+            if(!permissionList.isEmpty()){
+                String[] newPermissions = new String[permissionList.size()];
+
+                permissionList.toArray(newPermissions);
+
+                ActivityCompat.requestPermissions(this, newPermissions, REQUEST_CODE_PERMISSION);
+            }
+        }
+    }
 }
