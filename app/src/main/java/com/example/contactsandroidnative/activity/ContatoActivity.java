@@ -70,7 +70,7 @@ public class ContatoActivity extends AppCompatActivity {
         intent.putExtra(
                 MediaStore.EXTRA_OUTPUT,
                 FileProvider.getUriForFile(
-                        this, BuildConfig.APPLICATION_ID + ".provider",
+                        this, BuildConfig.APPLICATION_ID + ".fileprovider",
                         picture
                 )
         );
@@ -126,8 +126,5 @@ public class ContatoActivity extends AppCompatActivity {
             finish();
         }
 
-
-
     }
-
 }
