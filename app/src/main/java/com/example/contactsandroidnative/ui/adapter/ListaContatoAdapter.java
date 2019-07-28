@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.contactsandroidnative.R;
 import com.example.contactsandroidnative.data.model.Contato;
+import com.example.contactsandroidnative.util.ImageUtils;
 
 import org.w3c.dom.Text;
 
@@ -59,6 +60,8 @@ public class ListaContatoAdapter extends BaseAdapter {
 
             viewNome.setText(contato.getNome());
             viewEmail.setText(contato.getEmail());
+
+            ImageUtils.setImage(viewImg, contato.getImagem(), 60, 60);
         }
 
         return view;
