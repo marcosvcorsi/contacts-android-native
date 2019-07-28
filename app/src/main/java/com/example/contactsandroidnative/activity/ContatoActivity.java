@@ -20,6 +20,7 @@ import com.example.contactsandroidnative.R;
 import com.example.contactsandroidnative.data.dao.ContatoDAO;
 import com.example.contactsandroidnative.data.model.Contato;
 import com.example.contactsandroidnative.util.ImageUtils;
+import com.example.contactsandroidnative.util.MaskUtil;
 
 import java.io.File;
 
@@ -43,6 +44,9 @@ public class ContatoActivity extends AppCompatActivity {
         txtNome = findViewById(R.id.txt_nome);
         txtEmail = findViewById(R.id.txt_email);
         txtCel = findViewById(R.id.txt_cel);
+
+        MaskUtil.putMask(txtCel, "(NN)NNNNN-NNNN");
+
         imgContato = findViewById(R.id.img_contato);
 
         imgContato.setOnClickListener(new View.OnClickListener() {
