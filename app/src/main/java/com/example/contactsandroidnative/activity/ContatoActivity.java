@@ -60,6 +60,8 @@ public class ContatoActivity extends AppCompatActivity {
 
         if(intent.hasExtra(PARAM)){
             contato = (Contato) intent.getSerializableExtra(PARAM);
+
+            ImageUtils.setImage(imgContato, contato.getImagem());
         } else {
             contato = new Contato();
         }
